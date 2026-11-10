@@ -1,4 +1,4 @@
-#include "SSD1351.h"
+#include "../include/SSD1351.h"
 
 
 
@@ -163,7 +163,7 @@ void setPixel(point_t spot, color_t color) {
 
     setDC(1);
     byte data[2] = {color.MSB, color.LSB};
-    spiWrite(&data, 2);
+    spiWrite(data, 2);
     setDC(0);
     chipEnable(0);
          
@@ -187,7 +187,7 @@ void setRow(byte start, byte stop) {
     
     setDC(1);
     byte data[2] = {start, stop};
-    spiWrite(&data, 2);
+    spiWrite(data, 2);
     
     setDC(0);
     
@@ -203,7 +203,7 @@ void setColumn(byte start, byte stop) {
     
     setDC(1);
     byte data[2] = {start, stop};
-    spiWrite(&data, 2);
+    spiWrite(data, 2);
     setDC(0);
     chipEnable(0);
         
@@ -235,7 +235,7 @@ void startup() {
     
     setDC(1);
     data[0] = 0xB1; //Unlock extra commands
-    spiWrite(&data, 1);
+    spiWrite(data, 1);
     
     setDC(0);
     
@@ -247,7 +247,7 @@ void startup() {
     
     setDC(1);
     data[0] = 0x00;
-    spiWrite(&data, 1);
+    spiWrite(data, 1);
     
     setDC(0);
     
@@ -272,214 +272,4 @@ void startup() {
         spiWrite(color, 2);
     }
     setDC(0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
-//void sendCommand(byte command)
-//{
-//    setDC(0);
-//    spiWrite(&command, 1);
-//}
-//
-//void sendData(byte data)
-//{
-//    setDC(1);
-//    spiWrite(&data, 1);
-//}
-//
-//void startup(void)
-//{
-//    byte data[3];
-//
-//    chipEnable(1);
-//
-//    // Hardware reset
-//    displayReset();
-//
-//    // Unlock command interface
-//    sendCommand(SET_COMMAND_LOCK);
-//    data[0] = 0x12;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//    // Allow access to protected commands
-//    sendCommand(SET_COMMAND_LOCK);
-//    data[0] = 0xB1;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Display OFF while configuring
-//    sendCommand(DISPLAY_OFF);
-//
-//
-//    // Clock divider / oscillator
-//    sendCommand(FRONT_CLOCK_DIVIDER_OSC_FREQ);
-//    data[0] = 0xF1;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Multiplex ratio = 128
-//    sendCommand(SET_MUX_RATIO);
-//    data[0] = 0x7F;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Remap / color depth
-//    sendCommand(SET_CONFIG);
-//    data[0] = 0x74;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Column address
-//    sendCommand(SET_COLUMN_ADDRESS);
-//    data[0] = 0x00;
-//    data[1] = 0x7F;
-//    setDC(1);
-//    spiWrite(data, 2);
-//
-//
-//    // Row address
-//    sendCommand(SET_ROW_ADDRESS);
-//    data[0] = 0x00;
-//    data[1] = 0x7F;
-//    setDC(1);
-//    spiWrite(data, 2);
-//
-//
-//    // Display start line
-//    sendCommand(SET_DISPLAY_START_LINE);
-//    data[0] = 0x00;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Display offset
-//    sendCommand(SET_DISPLAY_OFFSET);
-//    data[0] = 0x00;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // GPIO
-//    sendCommand(SET_GPIO);
-//    data[0] = 0x00;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Function selection
-//    sendCommand(FUNCTION_SELECTION);
-//    data[0] = 0x01;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Phase length
-//    sendCommand(SET_RESET_PRECHARGE_PERIOD);
-//    data[0] = 0x32;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Segment low voltage
-//    sendCommand(SET_SEGMENT_LOW_VOLTAGE);
-//    data[0] = 0xA0;
-//    data[1] = 0xB5;
-//    data[2] = 0x55;
-//    setDC(1);
-//    spiWrite(data, 3);
-//
-//
-//    // Precharge voltage
-//    sendCommand(SET_PRE_CHARGE_VOLTAGE);
-//    data[0] = 0x17;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // COM deselect voltage
-//    sendCommand(SET_COM_DESELECT_VOLTAGE);
-//    data[0] = 0x05;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Contrast
-//    sendCommand(SET_CONTRAST_CURRENT);
-//    data[0] = 0xC8;
-//    data[1] = 0x80;
-//    data[2] = 0xC8;
-//    setDC(1);
-//    spiWrite(data, 3);
-//
-//
-//    // Master contrast
-//    sendCommand(SET_MASTER_CONTRAST);
-//    data[0] = 0x0F;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Second precharge
-//    sendCommand(SET_SECOND_PRECHARGE_PERIOD);
-//    data[0] = 0x01;
-//    setDC(1);
-//    spiWrite(data, 1);
-//
-//
-//    // Normal display mode
-//    sendCommand(SET_DISPLAY_NORMAL);
-//
-//
-//    // Display ON
-//    sendCommand(DISPLAY_ON);
-//
-//
-//    // Set column again
-//    sendCommand(SET_COLUMN_ADDRESS);
-//    data[0] = 0x00;
-//    data[1] = 0x7F;
-//    setDC(1);
-//    spiWrite(data, 2);
-//
-//
-//    // Set row again
-//    sendCommand(SET_ROW_ADDRESS);
-//    data[0] = 0x00;
-//    data[1] = 0x7F;
-//    setDC(1);
-//    spiWrite(data, 2);
-//
-//
-//    // Start writing RAM
-//    sendCommand(WRITE_RAM);
-//
-//
-//    // 128x128 = 16384 pixels
-//    // RGB565 red = F800
-//    byte red[2] = {0xF8, 0x00};
-//
-//    setDC(1);
-//
-//    for (uint32_t i = 0; i < 16384UL; i++)
-//    {
-//        spiWrite(red, 2);
-//    }
-//
-//    setDC(0);
-//}

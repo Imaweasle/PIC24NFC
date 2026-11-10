@@ -32,10 +32,11 @@
 #define	XC_HEADER_TEMPLATE_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-#include "delay.h"
+#include "./delay.h"
 #include "stdint.h"
 #include "stdbool.h"
 #include "math.h"
+#include "./font8x8.h"
 
 
 // TODO Insert C++ class definitions if appropriate
@@ -111,6 +112,9 @@ extern "C" {
     struct point {
         uint8_t x;
         uint8_t y;
+    };
+    enum font_t {
+        FONT_8x8
     };
     
     typedef struct color color_t;
